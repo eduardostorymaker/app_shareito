@@ -21,6 +21,7 @@ import { uploadReceipt, validateReceipt } from "@/lib/receipts";
 import { PAYMENT_METHODS } from "@/lib/constants";
 import { formatMoney, formatShortDate, parseAmount, toISODate, todayISO } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { withoutHidden } from "@/lib/categories";
 import type { Category, MemberInfo } from "@/lib/types";
 
 export type ComposerData = {
@@ -34,6 +35,8 @@ export type ComposerData = {
   groups: { id: string; name: string; currency: string; color: string; members: MemberInfo[] }[];
   categories: Category[];
   recentCategoryIds: string[];
+  /** Subcategorías del sistema que el usuario ocultó en Ajustes → Categorías. */
+  hiddenCategoryIds: string[];
 };
 
 type Options = ReturnType<typeof useComposer>["state"]["options"];
@@ -124,13 +127,20 @@ export function ExpenseForm({ data, options, onClose }: { data: ComposerData; op
   const symbol = currencySymbol(currency, data.locale);
 
   // Categorías que verán todos los que vean el gasto.
+  const hidden = useMemo(() => new Set(data.hiddenCategoryIds), [data.hiddenCategoryIds]);
+  // Al editar, la categoría actual del gasto se conserva aunque el usuario la tenga oculta.
+  const keepId = isEdit ? init.categoryId : null;
   const available = useMemo(
     () =>
-      data.categories.filter((c) =>
-        c.is_system ||
-        (scope === "personal" ? c.group_id === null && c.owner_id === data.userId : c.group_id === groupId),
+      withoutHidden(
+        data.categories.filter((c) =>
+          c.is_system ||
+          (scope === "personal" ? c.group_id === null && c.owner_id === data.userId : c.group_id === groupId),
+        ),
+        hidden,
+        keepId,
       ),
-    [data.categories, data.userId, scope, groupId],
+    [data.categories, data.userId, scope, groupId, hidden, keepId],
   );
   const selectable = useMemo(() => selectableCategories(available), [available]);
   const byId = useMemo(() => new Map(available.map((c) => [c.id, c])), [available]);
@@ -446,7 +456,14 @@ export function ExpenseForm({ data, options, onClose }: { data: ComposerData; op
             >
               <CategoryIcon icon={category.icon} color={category.color} />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium">{category.name}</span>
+                <span className="flex items-center gap-1.5">
+                  <span className="truncate text-sm font-medium">{category.name}</span>
+                  {hidden.has(category.id) ? (
+                    <span className="shrink-0 rounded-full bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                      Oculta para ti
+                    </span>
+                  ) : null}
+                </span>
                 {parent ? <span className="block truncate text-xs text-muted-foreground">{parent.name}</span> : null}
               </span>
               <span className="text-xs text-muted-foreground">Cambiar</span>

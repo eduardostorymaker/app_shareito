@@ -69,7 +69,7 @@ async function Settings() {
         <div className="divide-y rounded-xl border">
           <Link href="/ajustes/categorias" className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted/50">
             <Tags className="size-4 text-muted-foreground" />
-            <span className="flex-1">Categorías propias</span>
+            <span className="flex-1">Categorías</span>
             <ChevronRight className="size-4 text-muted-foreground" />
           </Link>
           <Link href="/papelera" className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted/50">

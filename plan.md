@@ -184,6 +184,8 @@ Resultado del análisis de los gastos habituales de una persona. Cada gasto se a
 
 Reglas: las categorías del sistema no se editan. Un usuario puede crear las suyas (solo para gastos personales) y un grupo las suyas (solo para gastos de ese grupo). Un gasto compartido solo admite categorías del sistema o del propio grupo, para que todos los miembros puedan verla.
 
+**Ocultar categorías del sistema (por usuario).** En *Ajustes → Categorías* cada usuario puede desactivar subcategorías del sistema, o una categoría entera desactivando todas las suyas. Se guarda en `hidden_categories` (migración `migrations/002_categorias_ocultas.sql`). Solo cambia el formulario de gasto de ese usuario: gastos, balances, panel, filtros, historial y los demás miembros no se ven afectados. Al editar un gasto cuya categoría está oculta, se conserva y se marca "Oculta para ti". "Otros › Sin categoría" no se puede ocultar.
+
 El campo `icon` guarda el nombre de un icono de `lucide`. El front debe resolverlo con un mapa explícito y un icono de reserva si el nombre no existe.
 
 ---

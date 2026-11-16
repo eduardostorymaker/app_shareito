@@ -101,6 +101,44 @@ export async function updateCategory(id: string, input: z.input<typeof categoryU
   return ok(undefined);
 }
 
+const idListSchema = z.array(z.guid()).min(1).max(200);
+
+/**
+ * Oculta o vuelve a mostrar subcategorías del sistema en el formulario del usuario.
+ * La base rechaza las que no se pueden ocultar (principales, propias, "Sin categoría").
+ */
+export async function setCategoriesHidden(categoryIds: string[], hidden: boolean): Promise<ActionResult> {
+  const userId = await getUserId();
+  if (!userId) return unauthenticated();
+  const parsed = idListSchema.safeParse(categoryIds);
+  if (!parsed.success) return invalid(parsed.error);
+
+  const supabase = await createClient();
+  const { error } = hidden
+    ? await supabase
+        .from("hidden_categories")
+        .upsert(
+          parsed.data.map((category_id) => ({ user_id: userId, category_id })),
+          { onConflict: "user_id,category_id", ignoreDuplicates: true },
+        )
+    : await supabase.from("hidden_categories").delete().eq("user_id", userId).in("category_id", parsed.data);
+  if (error) return fail(error);
+
+  refresh();
+  return ok(undefined);
+}
+
+/** Vuelve a mostrar todas las categorías del sistema. */
+export async function showAllCategories(): Promise<ActionResult> {
+  const userId = await getUserId();
+  if (!userId) return unauthenticated();
+  const supabase = await createClient();
+  const { error } = await supabase.from("hidden_categories").delete().eq("user_id", userId);
+  if (error) return fail(error);
+  refresh();
+  return ok(undefined);
+}
+
 export async function setCategoryArchived(id: string, archived: boolean): Promise<ActionResult> {
   const userId = await getUserId();
   if (!userId) return unauthenticated();

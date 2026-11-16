@@ -12,6 +12,7 @@ const MESSAGES: Record<string, string> = {
   CATEGORY_NOT_FOUND: "La categoría no existe.",
   CATEGORY_NOT_ALLOWED: "Esa categoría no está disponible para este gasto.",
   CATEGORY_INVALID_PARENT: "La categoría principal elegida no es válida.",
+  CATEGORY_NOT_HIDEABLE: "Esa categoría no se puede ocultar.",
   LAST_OWNER: "El grupo debe conservar al menos un propietario. Nombra a otro antes de salir.",
   IMMUTABLE_FIELD: "Ese dato no se puede modificar.",
   FORBIDDEN: "No tienes permiso para hacer esto.",

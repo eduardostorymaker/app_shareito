@@ -10,6 +10,8 @@
 
 Requisitos: Node.js 20 o superior y un proyecto de Supabase con `data_supabase.sql` ya ejecutado.
 
+**Migraciones.** Si ejecutaste `data_supabase.sql` antes de una funcionalidad nueva, ejecuta en el SQL Editor los archivos de [`migrations/`](migrations/) que falten, en orden. Son idempotentes. `data_supabase.sql` ya los incluye para instalaciones nuevas.
+
 ```bash
 npm install
 cp .env.example .env.local   # y rellena la URL y la clave pública de tu proyecto

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getProfile } from "@/lib/auth";
-import { getCategories, getMyGroups, getRecentCategoryIds } from "@/lib/queries";
+import { getCategories, getHiddenCategoryIds, getMyGroups, getRecentCategoryIds } from "@/lib/queries";
 import { ExpenseComposer } from "@/components/expenses/expense-composer";
 
 /**
@@ -11,10 +11,11 @@ export async function ComposerLoader() {
   const profile = await getProfile();
   if (!profile.onboarded_at) redirect("/bienvenida");
 
-  const [groups, categories, recentCategoryIds] = await Promise.all([
+  const [groups, categories, recentCategoryIds, hiddenCategoryIds] = await Promise.all([
     getMyGroups(),
     getCategories(),
     getRecentCategoryIds(),
+    getHiddenCategoryIds(),
   ]);
 
   return (
@@ -30,6 +31,7 @@ export async function ComposerLoader() {
         groups: groups.map((g) => ({ id: g.id, name: g.name, currency: g.currency, color: g.color, members: g.members })),
         categories,
         recentCategoryIds,
+        hiddenCategoryIds,
       }}
     />
   );

@@ -54,6 +54,14 @@ export const getCategories = cache(async (): Promise<Category[]> => {
   return data ?? [];
 });
 
+/** Subcategorías del sistema que el usuario ocultó en su formulario de gasto. */
+export const getHiddenCategoryIds = cache(async (): Promise<string[]> => {
+  const userId = await requireUserId();
+  const supabase = await createClient();
+  const { data } = await supabase.from("hidden_categories").select("category_id").eq("user_id", userId);
+  return (data ?? []).map((r) => r.category_id);
+});
+
 /** Categorías usadas recientemente por el usuario, de más a menos reciente. */
 export const getRecentCategoryIds = cache(async (): Promise<string[]> => {
   const userId = await requireUserId();

@@ -217,6 +217,32 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"hidden_categories": {
+                  Row: {
+                    "category_id": string,"created_at": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "category_id": string,"created_at"?: string,"user_id"?: string
+                  }
+                  Update: {
+                    "category_id"?: string,"created_at"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "hidden_categories_category_id_fkey"
+      columns: ["category_id"]
+isOneToOne: false
+      referencedRelation: "categories"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "hidden_categories_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"profiles": {
                   Row: {
                     "avatar_url": string | null,"created_at": string,"currency": string,"default_group_id": string | null,"default_payment_method": string,"default_scope": string,"display_name": string,"email": string,"id": string,"locale": string,"onboarded_at": string | null,"timezone": string,"updated_at": string
