@@ -7,9 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-geist-sans);
+  --font-heading: var(--font-jakarta);
+  --color-brand-accent: var(--brand-accent);
   --color-positive: var(--positive);
   --color-positive-foreground: var(--positive-foreground);
   --color-negative: var(--negative);
@@ -56,86 +57,91 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.511 0.23 276.97);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Shareito · paleta Índigo (ver brand/ y plan.md §9.7). Neutros con un matiz del primario. */
+  --background: #F7F6FD;
+  --foreground: #16123A;
+  --card: #FFFFFF;
+  --card-foreground: #16123A;
+  --popover: #FFFFFF;
+  --popover-foreground: #16123A;
+  --primary: #5038E0;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEEBFA;
+  --secondary-foreground: #16123A;
+  --muted: #EEEBFA;
+  --muted-foreground: #5E5B78;
+  --accent: #EEEBFA;
+  --accent-foreground: #16123A;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.585 0.233 277.12);
+  --border: #E4E1F2;
+  --input: #D9D5EC;
+  --ring: #5038E0;
+  /* Rosa de marca: solo para el símbolo e ilustraciones, nunca para importes ni estados. */
+  --brand-accent: #FF7EB6;
   --positive: oklch(0.527 0.137 150.07);
   --positive-foreground: oklch(0.985 0 0);
   --negative: oklch(0.505 0.213 27.52);
   --warning: oklch(0.666 0.157 58.32);
   --warning-foreground: oklch(0.279 0.077 45.64);
-  --series-1: #4f46e5;
+  --series-1: #5038E0;
   --series-2: #eb6834;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --chart-1: #5038E0;
+  --chart-2: #8F80FF;
+  --chart-3: #C9C1FF;
+  --chart-4: #2E2370;
+  --chart-5: #16123A;
+  --radius: 0.75rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #16123A;
+  --sidebar-primary: #5038E0;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEEBFA;
+  --sidebar-accent-foreground: #16123A;
+  --sidebar-border: #E4E1F2;
+  --sidebar-ring: #5038E0;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.673 0.182 276.94);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #100E22;
+  --foreground: #ECEAF7;
+  --card: #1B1834;
+  --card-foreground: #ECEAF7;
+  --popover: #1B1834;
+  --popover-foreground: #ECEAF7;
+  --primary: #8F80FF;
+  --primary-foreground: #16123A;
+  --secondary: #262245;
+  --secondary-foreground: #ECEAF7;
+  --muted: #262245;
+  --muted-foreground: #A9A5C4;
+  --accent: #262245;
+  --accent-foreground: #ECEAF7;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.673 0.182 276.94);
+  --border: #2C2849;
+  --input: #3A3560;
+  --ring: #8F80FF;
+  --brand-accent: #FF7EB6;
   --positive: oklch(0.765 0.177 163.22);
   --positive-foreground: oklch(0.145 0 0);
   --negative: oklch(0.704 0.191 22.22);
   --warning: oklch(0.828 0.189 84.43);
   --warning-foreground: oklch(0.279 0.077 45.64);
-  --series-1: #7c86ff;
+  /* Algo más oscuro que el primario para quedar en el rango de luminosidad de gráficos. */
+  --series-1: #8576FA;
   --series-2: #d95926;
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --chart-1: #8F80FF;
+  --chart-2: #B3A8FF;
+  --chart-3: #5038E0;
+  --chart-4: #C9C1FF;
+  --chart-5: #ECEAF7;
+  --sidebar: #15122B;
+  --sidebar-foreground: #ECEAF7;
+  --sidebar-primary: #8F80FF;
+  --sidebar-primary-foreground: #16123A;
+  --sidebar-accent: #262245;
+  --sidebar-accent-foreground: #ECEAF7;
+  --sidebar-border: #2C2849;
+  --sidebar-ring: #8F80FF;
 }
 
 @layer base {
@@ -147,6 +153,10 @@
   }
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
   }
   html {
     @apply font-sans;

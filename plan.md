@@ -1,11 +1,11 @@
-# Registro de Gastos — Plan de proyecto
+# Shareito — Plan de proyecto
 
 > Documento maestro para construir la aplicación. Está escrito para que un desarrollador (o un agente de código) pueda implementarla de principio a fin sin contexto adicional.
 > La base de datos completa está en [`data_supabase.sql`](data_supabase.sql); este plan la explica pero no la repite.
 
 | | |
 |---|---|
-| **Producto** | Aplicación web para registrar gastos personales y compartidos |
+| **Producto** | **Shareito**: aplicación web para registrar gastos personales y compartidos. Lema: *Cuentas claras, amistades largas.* |
 | **Frontend** | Next.js (App Router) + TypeScript + Tailwind CSS + shadcn/ui, desplegado en Vercel |
 | **Backend** | Supabase: PostgreSQL, Auth, Storage, Realtime |
 | **Idioma de la interfaz** | Español (código e identificadores en inglés) |
@@ -100,7 +100,7 @@ OCR de recibos, entrada por voz, reparto no equitativo, multimoneda con tipo de 
 | # | Decisión | Consecuencia |
 |---|---|---|
 | A1 | **Sin backend propio.** Next.js habla con Supabase usando el JWT del usuario | La seguridad depende de RLS, no del código del front. La `service_role key` no se usa en la v1 |
-| A2 | **Lecturas en Server Components, escrituras en Server Actions** | Sin capa de API REST propia. Tras cada escritura, `revalidatePath` |
+| A2 | **Lecturas en Server Components, escrituras en Server Actions** | Sin capa de API REST propia. Tras cada escritura, `refresh()` (ver §16) |
 | A3 | **Lógica de negocio en PostgreSQL** | La liquidación se calcula igual desde la web, desde pg_cron o desde una futura app móvil |
 | A4 | **Borrado lógico en todo** | Gastos con `deleted_at`, grupos y categorías con `archived_at`, miembros con `left_at` |
 | A5 | **Errores de negocio con código** | La base lanza `CODIGO: mensaje` (p. ej. `PERIOD_CLOSED: …`); el front traduce el código a un mensaje amable |
@@ -399,8 +399,9 @@ Filtros globales: periodo (este mes, mes pasado, 3 meses, año, personalizado), 
 
 ### 9.7 Sistema de diseño
 
-- **Base:** shadcn/ui, estilo `new-york`, color base neutro y un único color de acento.
-- **Tipografía:** Geist Sans; importes con `tabular-nums`.
+- **Marca:** ver [`brand/README.md`](brand/README.md): logotipo de billetera en línea, paleta Índigo (`#5038E0`) con rosa `#FF7EB6` solo en el símbolo.
+- **Base:** shadcn/ui (Radix, preset Nova) con los tokens de la paleta Índigo en `app/globals.css`; neutros con un matiz del primario.
+- **Tipografía:** Plus Jakarta Sans para titulares y cifras destacadas, Inter para el texto; importes alineados con `tabular-nums`.
 - **Color con significado:** verde para "te deben", rojo para "debes", ámbar para avisos. Nunca solo color: siempre acompañado de texto o icono.
 - **Categorías:** icono sobre un círculo con el color de la categoría al 15 % de opacidad.
 - **Modo oscuro** desde el primer día.
@@ -469,7 +470,7 @@ Componentes shadcn previstos: `button`, `input`, `label`, `form`, `select`, `dia
 ### Convenciones
 
 - Server Components por defecto; `"use client"` solo donde haya interacción.
-- Toda Server Action: valida con zod → llama a Supabase → traduce el error con `lib/errors.ts` → `revalidatePath` → devuelve `{ ok: true, data } | { ok: false, code, message }`.
+- Toda Server Action: valida con zod → llama a Supabase → traduce el error con `lib/errors.ts` → `refresh()` → devuelve `{ ok: true, data } | { ok: false, code, message }`.
 - Los importes llegan de PostgreSQL como `number`. Para sumar en el cliente, operar en céntimos enteros; las agregaciones importantes ya vienen calculadas de la base.
 - Las fechas de gasto son `date` sin hora: tratarlas como texto `YYYY-MM-DD`, nunca convertirlas con `new Date()` sin zona.
 - El `id` del gasto se genera en el cliente (`crypto.randomUUID()`) para poder subir el recibo y pintar la fila antes de la respuesta.
@@ -623,13 +624,15 @@ Cambios respecto al plan original, con su motivo. El resto se construyó tal com
 | Formularios | `react-hook-form` | Estado de React + `zod` en el servidor | Formularios cortos; una dependencia menos |
 | Gestor de paquetes | `pnpm` | `npm` | `pnpm` no estaba instalado; no cambia nada en Vercel |
 | Datos en Server Components | Lectura directa | `connection()` antes de crear el cliente de Supabase | Con Cache Components, el cliente de Supabase usa `Date.now()`, que no se admite en el prerenderizado |
-| Prefetch por sesión | — | `partialPrefetching: false` | Todo el contenido depende de la sesión. Con el prefetch por sesión activo, cada prefetch esperaba unos 10 s y bloqueaba las Server Actions del usuario |
+| Prefetch por sesión | — | `partialPrefetching: false` | Todo el contenido depende de la sesión, así que el prefetch por sesión no adelanta nada |
+| Refresco tras una acción | `revalidatePath` | `refresh()` en las Server Actions | `revalidatePath("/", "layout")` invalidaba los armazones estáticos de todas las rutas; regenerarlos tardaba unos 10 s y la acción siguiente del usuario quedaba en cola. No hay datos cacheados en el servidor, así que basta con refrescar la vista |
 | Realtime | Suscripción simple | Se pasa el token de la sesión al canal antes de suscribirse | Sin eso, el navegador se une como anónimo y la RLS no entrega los cambios |
 | Categorías recientes en el formulario | — | Se fijan al abrir el formulario | Evita que los chips se muevan si el servidor revalida con el formulario abierto |
 | Tests | Vitest + Playwright | Playwright (3 flujos) contra Supabase local | Los flujos críticos cubren la lógica de mayor riesgo de punta a punta; Vitest queda pendiente para utilidades |
 
 ### Pendiente
 
+- Marca aplicada: ver [`brand/README.md`](brand/README.md).
 - Tests unitarios con Vitest de `lib/format.ts`, `lib/ranges.ts` y `lib/errors.ts`.
 - Revisión con Lighthouse en el despliegue real (objetivo ≥ 90 en móvil).
 - Probar en el proyecto real el inicio con Google, la confirmación de correo y la recuperación de contraseña, que dependen de la configuración de Supabase (*URL Configuration* y proveedor de Google).

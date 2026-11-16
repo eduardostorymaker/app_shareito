@@ -2,7 +2,6 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { emailSchema, passwordSchema } from "@/lib/validations";
 import { safeNext } from "@/lib/actions/result";
@@ -33,7 +32,6 @@ export async function signIn(_: AuthFormState, formData: FormData): Promise<Auth
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { error: authErrorMessage(error.message), email };
 
-  revalidatePath("/", "layout");
   redirect(safeNext(formData.get("next")));
 }
 
@@ -64,7 +62,6 @@ export async function signUp(_: AuthFormState, formData: FormData): Promise<Auth
     return { message: `Te enviamos un enlace a ${email}. Ábrelo para activar tu cuenta.`, email };
   }
 
-  revalidatePath("/", "layout");
   redirect(next === "/" ? "/bienvenida" : next);
 }
 
@@ -108,6 +105,5 @@ export async function updatePassword(_: AuthFormState, formData: FormData): Prom
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  revalidatePath("/", "layout");
   redirect("/login");
 }

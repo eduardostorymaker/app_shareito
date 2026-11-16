@@ -97,7 +97,7 @@ async function SettlementDetail({ params }: { params: PageProps<"/grupos/[id]/ci
         <Card>
           <CardContent className="space-y-1">
             <p className="text-sm text-muted-foreground">Total del periodo</p>
-            <Money amount={s.total_amount} currency={s.currency} locale={profile.locale} tabular={false} className="block text-2xl font-semibold" />
+            <Money amount={s.total_amount} currency={s.currency} locale={profile.locale} tabular={false} className="block font-heading text-2xl font-semibold" />
             <p className="text-sm text-muted-foreground">entre {s.member_count} personas</p>
           </CardContent>
         </Card>

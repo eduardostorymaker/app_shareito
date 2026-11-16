@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { refresh as refreshRouter } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getUserId } from "@/lib/auth";
@@ -9,8 +9,13 @@ import { localeForCurrency } from "@/lib/constants";
 import { fail, invalid, ok, unauthenticated } from "@/lib/actions/result";
 import type { ActionResult } from "@/lib/types";
 
+/**
+ * Refresca la vista del usuario tras un cambio. No usa revalidatePath: no hay datos
+ * cacheados en el servidor que invalidar, y invalidar los armazones estáticos obligaba a
+ * volver a prerenderizarlos (~10 s) mientras la siguiente acción quedaba en cola.
+ */
 function refresh() {
-  revalidatePath("/", "layout");
+  refreshRouter();
 }
 
 const onboardingSchema = profileSchema.pick({ display_name: true, currency: true, timezone: true, default_scope: true });

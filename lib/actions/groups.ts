@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { refresh as refreshRouter } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getUserId } from "@/lib/auth";
@@ -10,8 +10,13 @@ import type { ActionResult } from "@/lib/types";
 
 const idSchema = z.guid();
 
+/**
+ * Refresca la vista del usuario tras un cambio. No usa revalidatePath: no hay datos
+ * cacheados en el servidor que invalidar, y invalidar los armazones estáticos obligaba a
+ * volver a prerenderizarlos (~10 s) mientras la siguiente acción quedaba en cola.
+ */
 function refresh() {
-  revalidatePath("/", "layout");
+  refreshRouter();
 }
 
 async function session() {

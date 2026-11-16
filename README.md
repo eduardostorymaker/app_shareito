@@ -1,10 +1,10 @@
-# Registro de Gastos
+# Shareito
 
-Aplicación web para registrar gastos personales y compartidos, con liquidación automática por periodos entre los miembros de un grupo.
+*Cuentas claras, amistades largas.* Aplicación web para registrar gastos personales y compartidos, con liquidación automática por periodos entre los miembros de un grupo.
 
 - **Frontend:** Next.js 16 (App Router, Cache Components) + TypeScript + Tailwind CSS 4 + shadcn/ui
 - **Backend:** Supabase (PostgreSQL con RLS, Auth, Storage, Realtime, pg_cron)
-- **Diseño completo:** [`plan.md`](plan.md) · **Base de datos:** [`data_supabase.sql`](data_supabase.sql)
+- **Diseño completo:** [`plan.md`](plan.md) · **Base de datos:** [`data_supabase.sql`](data_supabase.sql) · **Marca:** [`brand/README.md`](brand/README.md)
 
 ## Puesta en marcha
 

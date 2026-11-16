@@ -133,7 +133,7 @@ async function Detail({ params }: { params: PageProps<"/gastos/[id]">["params"] 
           <div className="flex items-center gap-4">
             <CategoryIcon icon={e.category_icon} color={e.category_color} size="lg" />
             <div>
-              <Money amount={e.amount} currency={e.currency} locale={profile.locale} tabular={false} className="block text-3xl font-semibold tracking-tight" />
+              <Money amount={e.amount} currency={e.currency} locale={profile.locale} tabular={false} className="block font-heading text-3xl font-semibold tracking-tight" />
               <p className="text-sm text-muted-foreground">{e.category_name}</p>
             </div>
           </div>

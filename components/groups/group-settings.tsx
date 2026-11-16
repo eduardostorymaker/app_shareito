@@ -112,7 +112,7 @@ export function Invitations({
     const url = linkFor(token);
     if (navigator.share) {
       try {
-        await navigator.share({ title: "Únete a mi grupo de gastos", url });
+        await navigator.share({ title: "Únete a mi grupo en Shareito", url });
         return;
       } catch {
         // cancelado: se copia al portapapeles

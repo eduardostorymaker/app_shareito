@@ -356,7 +356,7 @@ export function ExpenseForm({ data, options, onClose }: { data: ComposerData; op
               value={amountText}
               disabled={disabled}
               onChange={(e) => setAmountText(e.target.value.replace(/[^\d.,]/g, "").slice(0, 16))}
-              className="min-w-0 bg-transparent text-left text-5xl font-semibold tracking-tight tabular-nums outline-none placeholder:text-muted-foreground/40 disabled:opacity-60"
+              className="min-w-0 bg-transparent text-left font-heading text-5xl font-bold tracking-tight tabular-nums outline-none placeholder:text-muted-foreground/40 disabled:opacity-60"
               style={{ width: `${Math.max(4, amountText.length) + 0.3}ch` }}
             />
           </div>

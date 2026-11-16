@@ -133,7 +133,7 @@ async function GroupDetail({ params }: { params: PageProps<"/grupos/[id]">["para
               <p className="text-sm text-muted-foreground">Tu situación</p>
               <p
                 className={cn(
-                  "text-2xl font-semibold tracking-tight",
+                  "font-heading text-2xl font-bold tracking-tight",
                   situation.tone === "positive" && "text-positive",
                   situation.tone === "negative" && "text-negative",
                 )}
@@ -154,7 +154,7 @@ async function GroupDetail({ params }: { params: PageProps<"/grupos/[id]">["para
         <Card>
           <CardContent className="space-y-1">
             <p className="text-sm text-muted-foreground">Gastado en el periodo</p>
-            <Money amount={balance.total} currency={balance.currency} locale={profile.locale} tabular={false} className="block text-2xl font-semibold" />
+            <Money amount={balance.total} currency={balance.currency} locale={profile.locale} tabular={false} className="block font-heading text-2xl font-semibold" />
             <p className="text-sm text-muted-foreground">
               entre {balance.balances.length} · <Money amount={balance.balances.length ? balance.total / balance.balances.length : 0} currency={balance.currency} locale={profile.locale} /> por persona
             </p>

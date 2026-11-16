@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { Wallet } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ShareitoLogo } from "@/components/brand/logo";
 import { ComposerProvider } from "@/components/expenses/composer-context";
 import { ComposerLoader } from "@/components/expenses/composer-loader";
 import { BottomNav, SideNav } from "@/components/layout/app-nav";
@@ -26,11 +26,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       <div className="lg:pl-60">
         <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 lg:hidden">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Wallet className="size-3.5" />
-            </span>
-            <span className="font-semibold tracking-tight">Gastos</span>
+          <Link href="/" aria-label="Shareito, inicio">
+            <ShareitoLogo />
           </Link>
           <Suspense fallback={<Skeleton className="size-8 rounded-full" />}>
             <UserMenuLoader compact />

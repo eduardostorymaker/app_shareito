@@ -69,7 +69,7 @@ async function Home() {
         <Card>
           <CardContent className="space-y-1">
             <p className="text-sm text-muted-foreground">Llevas gastado este mes</p>
-            <Money amount={total} currency={profile.currency} locale={profile.locale} tabular={false} className="block text-4xl font-semibold tracking-tight" />
+            <Money amount={total} currency={profile.currency} locale={profile.locale} tabular={false} className="block font-heading text-4xl font-semibold tracking-tight" />
             <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground">
               <span>
                 {thisMonth?.tx_count ?? 0} {thisMonth?.tx_count === 1 ? "gasto" : "gastos"} · tu parte incluida

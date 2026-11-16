@@ -311,7 +311,7 @@ function StatTile({ label, hint, children }: { label: string; hint?: string; chi
   return (
     <div className="rounded-xl border bg-card p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="mt-1 truncate text-xl font-semibold tracking-tight sm:text-2xl">{children}</p>
+      <p className="mt-1 truncate font-heading text-xl font-bold tracking-tight sm:text-2xl">{children}</p>
       {hint ? <p className="mt-0.5 truncate text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );

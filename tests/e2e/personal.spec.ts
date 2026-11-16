@@ -49,6 +49,25 @@ test("registro → bienvenida → primer gasto, editar, historial, papelera y se
   await expect(page.getByRole("link", { name: /Compra semanal/ })).toBeVisible();
 });
 
+test("las pantallas ya visitadas muestran los cambios al volver a ellas", async ({ page }) => {
+  await signUp(page, "Dani Nav", uniqueEmail("dani"));
+  const nav = page.getByRole("navigation", { name: "Navegación principal" }).last();
+
+  // Visita Gastos y Panel (quedan montadas en segundo plano) y vuelve a Inicio.
+  await nav.getByRole("link", { name: "Gastos" }).click();
+  await expect(page.getByText("Todavía no hay gastos")).toBeVisible();
+  await nav.getByRole("link", { name: "Panel" }).click();
+  await expect(page.getByText(/No hay gastos en este mes/)).toBeVisible();
+  await nav.getByRole("link", { name: "Inicio" }).click();
+
+  await addExpense(page, "64", "Farmacia", { description: "Vitaminas" });
+
+  await nav.getByRole("link", { name: "Gastos" }).click();
+  await expect(page.getByRole("link", { name: /Vitaminas/ })).toBeVisible();
+  await nav.getByRole("link", { name: "Panel" }).click();
+  await expect(page.locator("section[aria-label=Indicadores]").getByText("S/ 64.00")).toBeVisible();
+});
+
 test("el panel suma lo mismo que la lista de gastos", async ({ page }) => {
   await signUp(page, "Beto Panel", uniqueEmail("beto"));
   await addExpense(page, "100", "Supermercado y mercado");

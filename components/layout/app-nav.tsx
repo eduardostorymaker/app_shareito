@@ -3,7 +3,8 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChartPie, House, Plus, ReceiptText, Settings, Users, Wallet } from "lucide-react";
+import { ChartPie, House, Plus, ReceiptText, Settings, Users } from "lucide-react";
+import { ShareitoLogo } from "@/components/brand/logo";
 import { useComposer } from "@/components/expenses/composer-context";
 import { cn } from "@/lib/utils";
 
@@ -101,11 +102,8 @@ function SideNavView({ pathname, userMenu }: { pathname: string | null; userMenu
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r bg-sidebar px-3 py-4 lg:flex">
-      <Link href="/" className="mb-6 flex items-center gap-2 px-2">
-        <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Wallet className="size-4" />
-        </span>
-        <span className="font-semibold tracking-tight">Registro de Gastos</span>
+      <Link href="/" className="mb-6 flex items-center px-2" aria-label="Shareito, inicio">
+        <ShareitoLogo markClassName="size-8" wordmarkClassName="text-xl" />
       </Link>
 
       <button

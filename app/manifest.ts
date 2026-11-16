@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Registro de Gastos",
-    short_name: "Gastos",
-    description: "Registra tus gastos personales y compartidos en segundos.",
+    name: "Shareito",
+    short_name: "Shareito",
+    description: "Registra tus gastos personales y compartidos en segundos. Cuentas claras, amistades largas.",
     start_url: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#ffffff",
-    theme_color: "#4f46e5",
+    background_color: "#F7F6FD",
+    theme_color: "#5038E0",
     lang: "es",
     icons: [
       { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
